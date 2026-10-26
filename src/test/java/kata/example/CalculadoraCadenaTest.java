@@ -25,4 +25,11 @@ public class CalculadoraCadenaTest {
         String res = calculadora.add("1,2");
         assertEquals("3", res);
     }
+
+    @Test
+    void devuelveLaSumaDeDosNumerosDecimales() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("1.1,2.2");
+        assertEquals("3.3", res);
+    }
 }
