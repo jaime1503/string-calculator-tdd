@@ -9,7 +9,7 @@ public class CalculadoraCadena {
             return "0";
         }
 
-        String[] partes = numeros.split(",");
+        String[] partes = numeros.split("[,\n]");
 
         if (partes.length == 1) {
             return numeros;
