@@ -32,4 +32,11 @@ public class CalculadoraCadenaTest {
         String res = calculadora.add("1.1,2.2");
         assertEquals("3.3", res);
     }
+
+    @Test
+    void devuelveLaSumaDeTresNumerosSeparadosPorComa() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("1,2,3");
+        assertEquals("6", res);
+    }
 }
