@@ -12,11 +12,12 @@ public class CalculadoraCadena {
 
         String patronSeparadores = "[,\n]";
         int longitudSeparador = 1;
+        String separadorPersonalizado = null;
 
         if (numeros.startsWith("//")) {
             int finCabecera = numeros.indexOf('\n');
 
-            String separadorPersonalizado =
+            separadorPersonalizado =
                     numeros.substring(2, finCabecera);
 
             numeros = numeros.substring(finCabecera + 1);
@@ -26,10 +27,6 @@ public class CalculadoraCadena {
         }
 
         String[] partes = numeros.split(patronSeparadores, -1);
-
-        if (partes.length == 1) {
-            return numeros;
-        }
 
         BigDecimal suma = BigDecimal.ZERO;
         int posicion = 0;
@@ -48,6 +45,18 @@ public class CalculadoraCadena {
 
                 return "Number expected but '" + encontrado
                         + "' found at position " + posicion + ".";
+            }
+
+            if (separadorPersonalizado != null) {
+                int posicionComa = parte.indexOf(',');
+
+                if (posicionComa >= 0) {
+                    int posicionError = posicion + posicionComa;
+
+                    return "'" + separadorPersonalizado
+                            + "' expected but ',' found at position "
+                            + posicionError + ".";
+                }
             }
 
             BigDecimal numero = new BigDecimal(parte);
