@@ -9,7 +9,7 @@ public class CalculadoraCadena {
             return "0";
         }
 
-        String[] partes = numeros.split("[,\n]");
+        String[] partes = numeros.split("[,\n]", -1);
 
         if (partes.length == 1) {
             return numeros;
@@ -20,13 +20,13 @@ public class CalculadoraCadena {
 
         for (String parte : partes) {
             if (parte.isEmpty()) {
+                if (posicion == numeros.length()) {
+                    return "Number expected but EOF found.";
+                }
                 char separador = numeros.charAt(posicion);
-
                 String encontrado = separador == '\n' ? "\\n" : String.valueOf(separador);
-
                 return "Number expected but '" + encontrado + "' found at position " + posicion + ".";
             }
-
             BigDecimal numero = new BigDecimal(parte);
             suma = suma.add(numero);
 
