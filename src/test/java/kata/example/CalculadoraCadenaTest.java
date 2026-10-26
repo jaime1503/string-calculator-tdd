@@ -67,5 +67,17 @@ public class CalculadoraCadenaTest {
         String res = calculadora.add("//;\n1;2");
         assertEquals("3", res);
     }
+    @Test
+    void devuelveLaSumaConUnaBarraVerticalComoSeparador() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("//|\n1|2|3");
+        assertEquals("6", resultado);
+    }
 
+    @Test
+    void devuelveLaSumaConUnSeparadorDeVariosCaracteres() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("//sep\n2sep3");
+        assertEquals("5", resultado);
+    }
 }
