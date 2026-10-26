@@ -12,4 +12,11 @@ public class CalculadoraCadenaTest {
         assertEquals("0", res);
     }
 
+    @Test
+    void devuelveElNumeroCuandoLaCadenaContieneUnSoloNumero() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("5");
+        assertEquals("5", res);
+    }
+
 }
