@@ -2,6 +2,8 @@ package kata.example;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalculadoraCadena {
 
@@ -31,6 +33,7 @@ public class CalculadoraCadena {
         BigDecimal suma = BigDecimal.ZERO;
         int posicion = 0;
 
+        List<String> negativos = new ArrayList<>();
         for (String parte : partes) {
             if (parte.isEmpty()) {
                 if (posicion == numeros.length()) {
@@ -62,13 +65,16 @@ public class CalculadoraCadena {
             BigDecimal numero = new BigDecimal(parte);
 
             if (numero.signum() < 0) {
-                return "Negative not allowed : " + parte;
+                negativos.add(parte);
+            } else {
+                suma = suma.add(numero);
             }
-            suma = suma.add(numero);
-
             posicion = posicion + parte.length() + longitudSeparador;
         }
 
+        if (!negativos.isEmpty()) {
+            return "Negative not allowed : " + String.join(", ", negativos);
+        }
         return suma.toPlainString();
     }
 }
