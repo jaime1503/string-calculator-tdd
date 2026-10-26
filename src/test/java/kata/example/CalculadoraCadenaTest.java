@@ -39,4 +39,11 @@ public class CalculadoraCadenaTest {
         String res = calculadora.add("1,2,3");
         assertEquals("6", res);
     }
+
+    @Test
+    void devuelveLaSumaCuandoHayComasYSaltosDeLinea() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("1\n2,3");
+        assertEquals("6", res);
+    }
 }
