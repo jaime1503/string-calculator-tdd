@@ -93,4 +93,11 @@ public class CalculadoraCadenaTest {
         String resultado = calculadora.add("-1,2");
         assertEquals("Negative not allowed : -1", resultado);
     }
+
+    @Test
+    void devuelveErrorConTodosLosNumerosNegativos() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("2,-4,-5");
+        assertEquals("Negative not allowed : -4, -5", resultado);
+    }
 }
