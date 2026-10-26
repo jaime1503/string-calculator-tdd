@@ -61,4 +61,11 @@ public class CalculadoraCadenaTest {
         String res = calculadora.add("1,3,");
         assertEquals("Number expected but EOF found.", res);
     }
+    @Test
+    void devuelveLaSumaConUnSeparadorPersonalizado() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("//;n1;n2");
+        assertEquals("3", res);
+    }
+
 }
