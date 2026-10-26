@@ -19,4 +19,10 @@ public class CalculadoraCadenaTest {
         assertEquals("5", res);
     }
 
+    @Test
+    void devuelveLaSumaDeDosNumerosSeparadosPorComa() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("1,2");
+        assertEquals("3", res);
+    }
 }
