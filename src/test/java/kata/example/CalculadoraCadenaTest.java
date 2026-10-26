@@ -80,4 +80,10 @@ public class CalculadoraCadenaTest {
         String resultado = calculadora.add("//sep\n2sep3");
         assertEquals("5", resultado);
     }
+    @Test
+    void devuelveErrorCuandoSeUsaUnSeparadorDistintoDelDeclarado() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("//|\n1|2,3");
+        assertEquals("'|' expected but ',' found at position 3.", resultado);
+    }
 }
