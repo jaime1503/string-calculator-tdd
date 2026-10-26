@@ -86,4 +86,11 @@ public class CalculadoraCadenaTest {
         String resultado = calculadora.add("//|\n1|2,3");
         assertEquals("'|' expected but ',' found at position 3.", resultado);
     }
+
+    @Test
+    void devuelveErrorCuandoHayUnNumeroNegativo() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("-1,2");
+        assertEquals("Negative not allowed : -1", resultado);
+    }
 }
