@@ -15,10 +15,13 @@ public class CalculadoraCadena {
             return numeros;
         }
 
-        BigDecimal primerNum = new BigDecimal(partes[0]);
-        BigDecimal segundoNum = new BigDecimal(partes[1]);
+        BigDecimal suma = BigDecimal.ZERO;
 
-        BigDecimal suma = primerNum.add(segundoNum);
+        for (String parte : partes) {
+            BigDecimal num = new BigDecimal(parte);
+            suma = suma.add(num);
+        }
+
         return suma.toPlainString();
     }
 }
