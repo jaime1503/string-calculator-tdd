@@ -3,6 +3,9 @@ package kata.example;
 public class CalculadoraCadena {
 
     public String add(String numeros) {
-        return "0";
+        if (numeros.isEmpty()) {
+            return "0";
+        }
+        return numeros;
     }
 }
