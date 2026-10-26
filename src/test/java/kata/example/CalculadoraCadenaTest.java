@@ -64,7 +64,7 @@ public class CalculadoraCadenaTest {
     @Test
     void devuelveLaSumaConUnSeparadorPersonalizado() {
         CalculadoraCadena calculadora = new CalculadoraCadena();
-        String res = calculadora.add("//;n1;n2");
+        String res = calculadora.add("//;\n1;2");
         assertEquals("3", res);
     }
 
