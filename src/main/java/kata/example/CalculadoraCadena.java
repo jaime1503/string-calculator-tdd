@@ -60,6 +60,10 @@ public class CalculadoraCadena {
             }
 
             BigDecimal numero = new BigDecimal(parte);
+
+            if (numero.signum() < 0) {
+                return "Negative not allowed : " + parte;
+            }
             suma = suma.add(numero);
 
             posicion = posicion + parte.length() + longitudSeparador;
