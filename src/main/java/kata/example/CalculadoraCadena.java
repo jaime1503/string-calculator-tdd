@@ -16,10 +16,21 @@ public class CalculadoraCadena {
         }
 
         BigDecimal suma = BigDecimal.ZERO;
+        int posicion = 0;
 
         for (String parte : partes) {
-            BigDecimal num = new BigDecimal(parte);
-            suma = suma.add(num);
+            if (parte.isEmpty()) {
+                char separador = numeros.charAt(posicion);
+
+                String encontrado = separador == '\n' ? "\\n" : String.valueOf(separador);
+
+                return "Number expected but '" + encontrado + "' found at position " + posicion + ".";
+            }
+
+            BigDecimal numero = new BigDecimal(parte);
+            suma = suma.add(numero);
+
+            posicion = posicion + parte.length() + 1;
         }
 
         return suma.toPlainString();
