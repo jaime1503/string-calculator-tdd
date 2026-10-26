@@ -55,4 +55,10 @@ public class CalculadoraCadenaTest {
         assertEquals(mensajeEsperado, res);
     }
 
+    @Test
+    void devuelveErrorCuandoLaCadenaTerminaEnSeparador() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String res = calculadora.add("1,3,");
+        assertEquals("Number expected but EOF found.", res);
+    }
 }
