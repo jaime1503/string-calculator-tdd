@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CalculadoraCadenaTest {
 
     @Test
@@ -132,5 +133,14 @@ public class CalculadoraCadenaTest {
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () -> calculadora.sumar("-1,,2"));
         String mensajeEsperado = "Negative not allowed : -1\n" + "Number expected but ',' found at position 3.";
         assertEquals(mensajeEsperado, error.getMessage());
+    }
+
+    @Test
+    void devuelveUnResultadoCorrectoConElValorDeLaSuma() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        ResultadoCalculo resultado = calculadora.sumarConResultado("1,2,3");
+        assertTrue(resultado.esCorrecto());
+        assertEquals(new BigDecimal("6"), resultado.getValor());
+        assertTrue(resultado.getErrores().isEmpty());
     }
 }

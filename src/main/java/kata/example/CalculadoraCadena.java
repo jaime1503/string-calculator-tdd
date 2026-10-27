@@ -121,4 +121,8 @@ public class CalculadoraCadena {
         return "Number expected but '" + encontrado
                 + "' found at position " + posicion + ".";
     }
+
+    ResultadoCalculo sumarConResultado(String numeros) {
+        return new ResultadoCalculo();
+    }
 }
