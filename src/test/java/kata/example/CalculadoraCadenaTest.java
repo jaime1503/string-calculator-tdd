@@ -109,4 +109,12 @@ public class CalculadoraCadenaTest {
         assertEquals(mensajeEsperado, resultado);
     }
 
+    @Test
+    void devuelveLosErroresEnElOrdenEnQueAparecen() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("-1,,-2");
+        String mensajeEsperado = "Negative not allowed : -1\n" + "Number expected but ',' found at position 3.\n" + "Negative not allowed : -2";
+        assertEquals(mensajeEsperado, resultado);
+    }
+
 }
