@@ -40,20 +40,9 @@ public class CalculadoraCadena {
             if (parte.isEmpty()) {
                 registrarNegativos(negativos, errores);
 
-                if (posicion == numeros.length()) {
-                    errores.add("Number expected but EOF found.");
-                } else {
-                    char separador = numeros.charAt(posicion);
-
-                    String encontrado = separador == '\n'
-                            ? "\\n"
-                            : String.valueOf(separador);
-
-                    errores.add(
-                            "Number expected but '" + encontrado
-                                    + "' found at position " + posicion + "."
-                    );
-                }
+                errores.add(
+                        crearMensajeNumeroAusente(numeros, posicion)
+                );
             } else {
                 int posicionComa = parte.indexOf(',');
 
@@ -103,5 +92,23 @@ public class CalculadoraCadena {
 
             negativos.clear();
         }
+    }
+
+    private String crearMensajeNumeroAusente(
+            String numeros,
+            int posicion) {
+
+        if (posicion == numeros.length()) {
+            return "Number expected but EOF found.";
+        }
+
+        char separador = numeros.charAt(posicion);
+
+        String encontrado = separador == '\n'
+                ? "\\n"
+                : String.valueOf(separador);
+
+        return "Number expected but '" + encontrado
+                + "' found at position " + posicion + ".";
     }
 }
