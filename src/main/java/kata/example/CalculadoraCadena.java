@@ -133,4 +133,8 @@ public class CalculadoraCadena {
             return new ResultadoCalculo(null, errores);
         }
     }
+
+    public String multiplicar(String numeros) {
+        return null;
+    }
 }

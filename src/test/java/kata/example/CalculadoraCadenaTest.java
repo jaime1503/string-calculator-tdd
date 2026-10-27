@@ -156,4 +156,11 @@ public class CalculadoraCadenaTest {
         assertNull(resultado.getValor());
         assertEquals(Arrays.asList("Negative not allowed : -1", "Number expected but ',' found at position 3."), resultado.getErrores());
     }
+
+    @Test
+    void devuelveElProductoDeDosNumeros() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.multiplicar("2,3");
+        assertEquals("6", resultado);
+    }
 }
