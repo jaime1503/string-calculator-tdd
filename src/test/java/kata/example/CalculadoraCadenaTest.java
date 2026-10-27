@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.stream.Stream;
 
 public class CalculadoraCadenaTest {
 
@@ -162,5 +166,34 @@ public class CalculadoraCadenaTest {
         CalculadoraCadena calculadora = new CalculadoraCadena();
         String resultado = calculadora.multiplicar("2,3");
         assertEquals("6", resultado);
+    }
+
+    @ParameterizedTest(name = "Caso de multiplicación {index}")
+    @MethodSource("casosDeMultiplicacion")
+    void multiplicaRespetandoLasReglas(
+            String entrada,
+            String esperado) {
+
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+
+        String resultado = calculadora.multiplicar(entrada);
+
+        assertEquals(esperado, resultado);
+    }
+
+    static Stream<Arguments> casosDeMultiplicacion() {
+        return Stream.of(
+                Arguments.of("", "0"), Arguments.of("7", "7"), Arguments.of("2,3,4", "24"), Arguments.of("1.1,2.2", "2.42"), Arguments.of("2\n3,4", "24"),
+                Arguments.of("//;\n2;3", "6"), Arguments.of("//|\n2|3|4", "24"), Arguments.of("//sep\n2sep3", "6"),
+
+                Arguments.of("175.2,\n35", "Number expected but '\\n' found at position 6."),
+                Arguments.of("1,3,", "Number expected but EOF found."),
+                Arguments.of("//|\n1|2,3", "'|' expected but ',' found at position 3."),
+                Arguments.of("-1,2", "Negative not allowed : -1"),
+                Arguments.of("2,-4,-5", "Negative not allowed : -4, -5"),
+                Arguments.of("-1,,2", "Negative not allowed : -1\n" + "Number expected but ',' found at position 3."),
+                Arguments.of("-1,,-2", "Negative not allowed : -1\n" + "Number expected but ',' found at position 3.\n" + "Negative not allowed : -2"),
+                Arguments.of("2,0,3", "0"),
+                Arguments.of("//sep\n2sep", "Number expected but EOF found."));
     }
 }
