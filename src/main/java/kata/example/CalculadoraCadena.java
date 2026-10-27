@@ -80,6 +80,9 @@ public class CalculadoraCadena {
         return suma.toPlainString();
     }
 
+    BigDecimal sumar(String numeros) {
+        return null;
+    }
     private void registrarNegativos(
             List<String> negativos,
             List<String> errores) {

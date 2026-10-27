@@ -2,6 +2,7 @@ package kata.example;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.math.BigDecimal;
 public class CalculadoraCadenaTest {
 
     @Test
@@ -117,4 +118,10 @@ public class CalculadoraCadenaTest {
         assertEquals(mensajeEsperado, resultado);
     }
 
+    @Test
+    void devuelveUnResultadoNumericoAlSumar() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        BigDecimal resultado = calculadora.sumar("1,2,3");
+        assertEquals(new BigDecimal("6"), resultado);
+    }
 }
