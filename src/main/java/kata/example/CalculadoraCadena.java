@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.Collections;
 
 public class CalculadoraCadena {
 
@@ -123,6 +124,7 @@ public class CalculadoraCadena {
     }
 
     ResultadoCalculo sumarConResultado(String numeros) {
-        return new ResultadoCalculo();
+        BigDecimal valor = sumar(numeros);
+        return new ResultadoCalculo(valor, Collections.emptyList());
     }
 }
