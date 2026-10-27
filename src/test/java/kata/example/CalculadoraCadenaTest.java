@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class CalculadoraCadenaTest {
 
     @Test
@@ -142,5 +146,14 @@ public class CalculadoraCadenaTest {
         assertTrue(resultado.esCorrecto());
         assertEquals(new BigDecimal("6"), resultado.getValor());
         assertTrue(resultado.getErrores().isEmpty());
+    }
+
+    @Test
+    void devuelveUnResultadoConErroresCuandoLaEntradaEsInvalida() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        ResultadoCalculo resultado = calculadora.sumarConResultado("-1,,2");
+        assertFalse(resultado.esCorrecto());
+        assertNull(resultado.getValor());
+        assertEquals(Arrays.asList("Negative not allowed : -1", "Number expected but ',' found at position 3."), resultado.getErrores());
     }
 }
