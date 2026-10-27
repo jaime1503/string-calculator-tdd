@@ -3,6 +3,7 @@ package kata.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CalculadoraCadenaTest {
 
     @Test
@@ -123,5 +124,13 @@ public class CalculadoraCadenaTest {
         CalculadoraCadena calculadora = new CalculadoraCadena();
         BigDecimal resultado = calculadora.sumar("1,2,3");
         assertEquals(new BigDecimal("6"), resultado);
+    }
+
+    @Test
+    void lanzaUnaExcepcionConLosErroresDeLaEntrada() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () -> calculadora.sumar("-1,,2"));
+        String mensajeEsperado = "Negative not allowed : -1\n" + "Number expected but ',' found at position 3.";
+        assertEquals(mensajeEsperado, error.getMessage());
     }
 }
