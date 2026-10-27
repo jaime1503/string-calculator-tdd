@@ -2,22 +2,63 @@ package kata.example;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.Collections;
-import java.util.Arrays;
 
 public class CalculadoraCadena {
 
     public String add(String numeros) {
-        ResultadoCalculo resultado = sumarConResultado(numeros);
-        if (!resultado.esCorrecto()) {
-            return String.join("\n", resultado.getErrores());
-        }
-        return resultado.getValor().toPlainString();
+        return presentarResultado(sumarConResultado(numeros));
+    }
+
+    public String multiplicar(String numeros) {
+        return presentarResultado(
+                calcularConResultado(numeros, true)
+        );
     }
 
     BigDecimal sumar(String numeros) {
+        return calcular(numeros, false);
+    }
+
+    ResultadoCalculo sumarConResultado(String numeros) {
+        return calcularConResultado(numeros, false);
+    }
+
+    private ResultadoCalculo calcularConResultado(
+            String numeros,
+            boolean multiplicacion) {
+
+        try {
+            BigDecimal valor = calcular(numeros, multiplicacion);
+
+            return new ResultadoCalculo(
+                    valor,
+                    Collections.emptyList()
+            );
+        } catch (IllegalArgumentException error) {
+            List<String> errores = Arrays.asList(
+                    error.getMessage().split("\n")
+            );
+
+            return new ResultadoCalculo(null, errores);
+        }
+    }
+
+    private String presentarResultado(ResultadoCalculo resultado) {
+        if (!resultado.esCorrecto()) {
+            return String.join("\n", resultado.getErrores());
+        }
+
+        return resultado.getValor().toPlainString();
+    }
+
+    private BigDecimal calcular(
+            String numeros,
+            boolean multiplicacion) {
+
         if (numeros.isEmpty()) {
             return BigDecimal.ZERO;
         }
@@ -40,7 +81,10 @@ public class CalculadoraCadena {
 
         String[] partes = numeros.split(patronSeparadores, -1);
 
-        BigDecimal suma = BigDecimal.ZERO;
+        BigDecimal resultadoNumerico = multiplicacion
+                ? BigDecimal.ONE
+                : BigDecimal.ZERO;
+
         int posicion = 0;
 
         List<String> negativos = new ArrayList<>();
@@ -72,8 +116,12 @@ public class CalculadoraCadena {
 
                     if (numero.signum() < 0) {
                         negativos.add(parte);
+                    } else if (multiplicacion) {
+                        resultadoNumerico =
+                                resultadoNumerico.multiply(numero);
                     } else {
-                        suma = suma.add(numero);
+                        resultadoNumerico =
+                                resultadoNumerico.add(numero);
                     }
                 }
             }
@@ -89,7 +137,7 @@ public class CalculadoraCadena {
             );
         }
 
-        return suma;
+        return resultadoNumerico;
     }
 
     private void registrarNegativos(
@@ -122,19 +170,5 @@ public class CalculadoraCadena {
 
         return "Number expected but '" + encontrado
                 + "' found at position " + posicion + ".";
-    }
-
-    ResultadoCalculo sumarConResultado(String numeros) {
-        try {
-            BigDecimal valor = sumar(numeros);
-            return new ResultadoCalculo(valor, Collections.emptyList());
-        } catch (IllegalArgumentException error) {
-            List<String> errores = Arrays.asList(error.getMessage().split("\n"));
-            return new ResultadoCalculo(null, errores);
-        }
-    }
-
-    public String multiplicar(String numeros) {
-        return null;
     }
 }
