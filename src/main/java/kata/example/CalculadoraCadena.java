@@ -10,11 +10,11 @@ import java.util.Arrays;
 public class CalculadoraCadena {
 
     public String add(String numeros) {
-        try {
-            return sumar(numeros).toPlainString();
-        } catch (IllegalArgumentException error) {
-            return error.getMessage();
+        ResultadoCalculo resultado = sumarConResultado(numeros);
+        if (!resultado.esCorrecto()) {
+            return String.join("\n", resultado.getErrores());
         }
+        return resultado.getValor().toPlainString();
     }
 
     BigDecimal sumar(String numeros) {
