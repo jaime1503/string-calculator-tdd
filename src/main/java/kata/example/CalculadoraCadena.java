@@ -8,8 +8,16 @@ import java.util.regex.Pattern;
 public class CalculadoraCadena {
 
     public String add(String numeros) {
+        try {
+            return sumar(numeros).toPlainString();
+        } catch (IllegalArgumentException error) {
+            return error.getMessage();
+        }
+    }
+
+    BigDecimal sumar(String numeros) {
         if (numeros.isEmpty()) {
-            return "0";
+            return BigDecimal.ZERO;
         }
 
         String patronSeparadores = "[,\n]";
@@ -74,15 +82,14 @@ public class CalculadoraCadena {
         registrarNegativos(negativos, errores);
 
         if (!errores.isEmpty()) {
-            return String.join("\n", errores);
+            throw new IllegalArgumentException(
+                    String.join("\n", errores)
+            );
         }
 
-        return suma.toPlainString();
+        return suma;
     }
 
-    BigDecimal sumar(String numeros) {
-        return null;
-    }
     private void registrarNegativos(
             List<String> negativos,
             List<String> errores) {
