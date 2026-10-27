@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.Collections;
+import java.util.Arrays;
 
 public class CalculadoraCadena {
 
@@ -124,7 +125,12 @@ public class CalculadoraCadena {
     }
 
     ResultadoCalculo sumarConResultado(String numeros) {
-        BigDecimal valor = sumar(numeros);
-        return new ResultadoCalculo(valor, Collections.emptyList());
+        try {
+            BigDecimal valor = sumar(numeros);
+            return new ResultadoCalculo(valor, Collections.emptyList());
+        } catch (IllegalArgumentException error) {
+            List<String> errores = Arrays.asList(error.getMessage().split("\n"));
+            return new ResultadoCalculo(null, errores);
+        }
     }
 }
