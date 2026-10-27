@@ -1,9 +1,9 @@
 package kata.example;
 
 import java.math.BigDecimal;
-import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class CalculadoraCadena {
 
@@ -34,47 +34,74 @@ public class CalculadoraCadena {
         int posicion = 0;
 
         List<String> negativos = new ArrayList<>();
+        List<String> errores = new ArrayList<>();
+
         for (String parte : partes) {
             if (parte.isEmpty()) {
+                registrarNegativos(negativos, errores);
+
                 if (posicion == numeros.length()) {
-                    return "Number expected but EOF found.";
+                    errores.add("Number expected but EOF found.");
+                } else {
+                    char separador = numeros.charAt(posicion);
+
+                    String encontrado = separador == '\n'
+                            ? "\\n"
+                            : String.valueOf(separador);
+
+                    errores.add(
+                            "Number expected but '" + encontrado
+                                    + "' found at position " + posicion + "."
+                    );
                 }
-
-                char separador = numeros.charAt(posicion);
-
-                String encontrado = separador == '\n'
-                        ? "\\n"
-                        : String.valueOf(separador);
-
-                return "Number expected but '" + encontrado
-                        + "' found at position " + posicion + ".";
-            }
-
-            if (separadorPersonalizado != null) {
+            } else {
                 int posicionComa = parte.indexOf(',');
 
-                if (posicionComa >= 0) {
+                if (separadorPersonalizado != null
+                        && posicionComa >= 0) {
+                    registrarNegativos(negativos, errores);
+
                     int posicionError = posicion + posicionComa;
 
-                    return "'" + separadorPersonalizado
-                            + "' expected but ',' found at position "
-                            + posicionError + ".";
+                    errores.add(
+                            "'" + separadorPersonalizado
+                                    + "' expected but ',' found at position "
+                                    + posicionError + "."
+                    );
+                } else {
+                    BigDecimal numero = new BigDecimal(parte);
+
+                    if (numero.signum() < 0) {
+                        negativos.add(parte);
+                    } else {
+                        suma = suma.add(numero);
+                    }
                 }
             }
 
-            BigDecimal numero = new BigDecimal(parte);
-
-            if (numero.signum() < 0) {
-                negativos.add(parte);
-            } else {
-                suma = suma.add(numero);
-            }
             posicion = posicion + parte.length() + longitudSeparador;
         }
 
-        if (!negativos.isEmpty()) {
-            return "Negative not allowed : " + String.join(", ", negativos);
+        registrarNegativos(negativos, errores);
+
+        if (!errores.isEmpty()) {
+            return String.join("\n", errores);
         }
+
         return suma.toPlainString();
+    }
+
+    private void registrarNegativos(
+            List<String> negativos,
+            List<String> errores) {
+
+        if (!negativos.isEmpty()) {
+            errores.add(
+                    "Negative not allowed : "
+                            + String.join(", ", negativos)
+            );
+
+            negativos.clear();
+        }
     }
 }
