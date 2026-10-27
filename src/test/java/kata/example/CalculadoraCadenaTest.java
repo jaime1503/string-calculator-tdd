@@ -100,4 +100,13 @@ public class CalculadoraCadenaTest {
         String resultado = calculadora.add("2,-4,-5");
         assertEquals("Negative not allowed : -4, -5", resultado);
     }
+
+    @Test
+    void devuelveLosErroresDeUnNegativoYUnNumeroAusente() {
+        CalculadoraCadena calculadora = new CalculadoraCadena();
+        String resultado = calculadora.add("-1,,2");
+        String mensajeEsperado = "Negative not allowed : -1\n" + "Number expected but ',' found at position 3.";
+        assertEquals(mensajeEsperado, resultado);
+    }
+
 }
